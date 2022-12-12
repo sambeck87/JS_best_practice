@@ -69,14 +69,14 @@ class Tasks {
   }
 }
 /* *************************************************************** */
-const backgroud = () => {
+const taskBackgroud = () => {
   const containers = document.querySelectorAll('.description');
   containers.forEach((element) => {
     element.addEventListener('focus', () => {
-      const numCont = `cont${element.id}`;
-      const cont = document.getElementById(numCont);
-      cont.classList.add('yellow');
-      cont.classList.remove('white');
+      const indexContainer = `cont${element.id}`;
+      const taskContainer = document.getElementById(indexContainer);
+      taskContainer.classList.add('yellow');
+      taskContainer.classList.remove('white');
       const dots = `.dot${element.id}`;
       const toHide = document.querySelector(dots);
       toHide.classList.add('hide');
@@ -88,10 +88,10 @@ const backgroud = () => {
 
   containers.forEach((element) => {
     element.addEventListener('blur', () => {
-      const numCont = `cont${element.id}`;
-      const cont = document.getElementById(numCont);
-      cont.classList.add('white');
-      cont.classList.remove('yellow');
+      const indexContainer = `cont${element.id}`;
+      const taskContainer = document.getElementById(indexContainer);
+      taskContainer.classList.add('white');
+      taskContainer.classList.remove('yellow');
       const dots = `.dot${element.id}`;
       const toHide = document.querySelector(dots);
       toHide.classList.remove('hide');
@@ -106,10 +106,10 @@ const backgroud = () => {
 
   containers.forEach((element) => {
     element.addEventListener('keypress', (event) => {
-      const numCont = `cont${element.id}`;
-      const cont = document.getElementById(numCont);
+      const indexContainer = `cont${element.id}`;
+      const taskContainer = document.getElementById(indexContainer);
       if (event.key === 'Enter') {
-        cont.classList.remove('yellow');
+        taskContainer.classList.remove('yellow');
         const dots = `.dot${element.id}`;
         const toHide = document.querySelector(dots);
         toHide.classList.remove('hide');
@@ -127,15 +127,15 @@ const checkbox = () => {
     element.addEventListener('change', () => {
       const text = document.getElementById(element.value);
       text.classList.toggle('cross_out');
-      const val = element.value;
+      const inputValue = element.value;
       let allData = localStorage.getItem('tasks');
       allData = JSON.parse(allData);
       if (text.classList.contains('cross_out')) {
-        allData[val].complete = true;
+        allData[inputValue].complete = true;
         allData = JSON.stringify(allData);
         localStorage.setItem('tasks', allData);
       } else {
-        allData[val].complete = false;
+        allData[inputValue].complete = false;
         allData = JSON.stringify(allData);
         localStorage.setItem('tasks', allData);
       }
@@ -216,8 +216,8 @@ modify.forEach((element) => {
 const trash = document.querySelectorAll('.btn');
 trash.forEach((element) => {
   element.addEventListener('click', () => {
-    const val = element.value;
-    const justOne = new Tasks(null, null, val);
+    const buttonValue = element.value;
+    const justOne = new Tasks(null, null, buttonValue);
     justOne.deleteOne();
     restIndex();
     // eslint-disable-next-line no-restricted-globals
@@ -235,7 +235,7 @@ eraseBtn.addEventListener('click', () => {
 const dragBtn = document.querySelectorAll('.icon');
 dragBtn.forEach((btn) => {
   btn.addEventListener('mousedown', () => {
-    const val = btn.value;
+    const buttonValue = btn.value;
 
     const sibilings = document.querySelectorAll('.center');
     sibilings.forEach((element) => {
@@ -247,11 +247,11 @@ dragBtn.forEach((btn) => {
         const index = sibilingId.replace(/[^0-9]/g, '');
         let allData = localStorage.getItem('tasks');
         allData = JSON.parse(allData);
-        const temp = allData.splice(val, 1);
+        const taskMoved = allData.splice(buttonValue, 1);
         const arr1 = [...allData];
         let arr2 = [...allData];
         arr2 = arr1.splice(0, index);
-        let arr = [...arr2, ...temp, ...arr1];
+        let arr = [...arr2, ...taskMoved, ...arr1];
         arr = JSON.stringify(arr);
         localStorage.setItem('tasks', arr);
         restIndex();
@@ -262,6 +262,6 @@ dragBtn.forEach((btn) => {
   });
 });
 
-backgroud();
+taskBackgroud();
 checkbox();
 window.addEventListener('load', setup);
