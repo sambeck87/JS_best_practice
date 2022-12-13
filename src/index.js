@@ -23,9 +23,9 @@ const Display = () => {
   if (getData() === null) {
     return 0;
   }
-  for (let i = 0; i < getData().length; i += 1) {
-    const { description, index } = getData()[i];
-    fill += `<div draggable="true" class="center" id="cont${i}"><input class='check' type="checkbox" name="tasks" id="task${index}" value="${i}"><label for="task${index}" class = "description"><input type="text" class = "description" id="${i}" value="${description}"></label><button type="button" class="icon dot${i}" value="${i}">&#8942</button><button type="button" id="trash${i}" value="${i}" class="btn hide"><img src="./images/trash.svg" alt="trash"></button></div>`;
+  for (let interactions = 0; interactions < getData().length; interactions += 1) {
+    const { description, index } = getData()[interactions];
+    fill += `<div draggable="true" class="center" id="cont${interactions}"><input class='check' type="checkbox" name="tasks" id="task${index}" value="${interactions}"><label for="task${index}" class = "description"><input type="text" class = "description" id="${interactions}" value="${description}"></label><button type="button" class="icon dot${interactions}" value="${interactions}">&#8942</button><button type="button" id="trash${interactions}" value="${interactions}" class="btn hide"><img src="./images/trash.svg" alt="trash"></button></div>`;
   }
   document.getElementById('tasks').innerHTML = `${fill}`;
   return 0;
